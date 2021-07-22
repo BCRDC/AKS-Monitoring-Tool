@@ -1,3 +1,6 @@
+#wsl install kubectl
+https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+
 kubectl config --kubeconfig="/mnt/c/kubectl/.kube_prod/config" view
 
 # https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/
