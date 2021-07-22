@@ -1,0 +1,3 @@
+kubectl config --kubeconfig="/mnt/c/kubectl/.kube_prod/config" view
+
+export KUBECONFIG=$KUBECONFIG:"/mnt/c/kubectl/.kube_prod/config"

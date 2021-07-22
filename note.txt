@@ -1,0 +1,37 @@
+az cloud set -n AzureChinaCloud
+
+
+ubuntu install tar.gz
+https://ccm.net/faq/14903-how-to-install-a-tar-gz-file-on-ubuntu
+
+ubuntu install tar.xz
+https://ubuntuqa.com/article/9015.html
+
+install
+https://sourceforge.net/projects/proxychains-ng/files/
+
+
+https://blog.csdn.net/Lazybones_3/article/details/85129470
+http://johnbokma.com/blog/2019/04/19/building-the-latest-version-of-proxychains-ng.html
+
+
+https://stackoverflow.com/questions/36325239/proxychains-ng-couldnt-locate-libproxychains4-so/38166317
+
+https://blog.csdn.net/weixin_43619065/article/details/105015760
+
+https://blog.csdn.net/weixin_43619065/article/details/105015760
+
+https://www.radford.edu/~mhtay/CPSC120/VIM_Editor_Commands.htm
+
+
+chocolatey
+https://community.chocolatey.org/packages/wsl-ubuntu-2004
+
+1. https://docs.brew.sh/Homebrew-on-Linux
+
+2. https://helm.sh/
+
+
+gofish
+https://gofi.sh/index.html
+
