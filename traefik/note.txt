@@ -1,0 +1,9 @@
+# traefik here is not a helm project, so helm cli is not supported
+
+
+# run below cmd from  WSL terminal
+kubectl apply -f ./templates/01resourceDefinition.yaml
+kubectl apply -f ./templates/02open-api-rbac.yaml 
+kubectl apply -f ./templates/03rbac.yaml
+kubectl apply -f ./templates/04traefik.yaml
+kubectl apply -f ./templates/05IngressRoute.yaml
