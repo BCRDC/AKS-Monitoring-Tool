@@ -14,10 +14,14 @@ kubectl api-resources --verbs=list --namespaced -o name \
   | xargs -n 1 kubectl get --show-kind --ignore-not-found -n {namespace}
 
 
+# have a test on push gateway 
+echo "some_metric 3.14" | curl --data-binary @- http://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics/job/some_job
 
-  function kubectlgetall {
-  for i in $(kubectl api-resources --verbs=list --namespaced -o name | grep -v "events.events.k8s.io" | grep -v "events" | sort | uniq); do
-    echo "Resource:" $i
-    kubectl -n ${1} get --ignore-not-found ${i}
-  done
-}
+curl  http://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics/job/some_job/instance/some_instance \
+--data-binary @- <<EOF 
+  # TYPE some_metric counter
+  some_metric{label="val1"} 42
+  # TYPE another_metric gauge
+  # HELP another_metric Just an example.
+  another_metric 2398.283
+  EOF
