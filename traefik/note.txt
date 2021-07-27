@@ -5,5 +5,5 @@
 kubectl apply -f ./templates/01resourceDefinition.yaml
 kubectl apply -f ./templates/02open-api-rbac.yaml 
 kubectl apply -f ./templates/03rbac.yaml
-kubectl apply -f ./templates/04traefik.yaml
-kubectl apply -f ./templates/05IngressRoute.yaml
+kubectl apply -f ./templates/05TLSstore.yaml
+kubectl apply -f ./templates/06IngressRoute.yaml

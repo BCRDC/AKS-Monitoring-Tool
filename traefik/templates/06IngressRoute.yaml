@@ -13,3 +13,6 @@ spec:
     services:
       - name: prometheus-pushgateway
         port: 9091
+  tls:
+    store: 
+      name: default

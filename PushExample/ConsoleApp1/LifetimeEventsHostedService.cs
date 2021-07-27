@@ -50,7 +50,7 @@ namespace ConsoleApp1
             // throw new NotImplementedException();
             var pusher = new MetricPusher(new MetricPusherOptions
             {
-                Endpoint = "http://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics",
+                Endpoint = "https://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics",
                 Job = "some_job1",
                 Instance = "Instance1",
                 AdditionalLabels = new[] { new Tuple<string, string>("t1", "t2")},
