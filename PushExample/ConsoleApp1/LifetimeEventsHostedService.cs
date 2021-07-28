@@ -4,6 +4,7 @@ using Prometheus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,12 +15,17 @@ namespace ConsoleApp1
     {
         private readonly ILogger _logger;
 
+        private static readonly List<string> Dimensions = new List<string>
+        {
+            "Cluster",
+            "NodeName",
+            "EngagementAccount",
+            "SubscriptionId",
+            "ServiceProvider"
+        };
 
-        private Gauge UsersLoggedIn = null;
 
-        private  CollectorRegistry _reg = new CollectorRegistry();
-
-
+        private readonly MetricWrapper _wrapper = null;
 
         public LifetimeEventsHostedService(
         ILogger<LifetimeEventsHostedService> logger,
@@ -27,11 +33,8 @@ namespace ConsoleApp1
         {
             _logger = logger;
 
-            _reg.SetStaticLabels(new Dictionary<string, string>
-{
-  // Labels applied to all metrics in the registry.
-  { "environment", "testing" }
-});
+
+            _wrapper = new MetricWrapper("CEFGlobalMDM", "GatewayMetrics", Dimensions.ToArray());
 
 
 
@@ -39,33 +42,19 @@ namespace ConsoleApp1
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-          var factory =   Metrics.WithCustomRegistry(_reg);
 
-            UsersLoggedIn = factory.CreateGauge("myapp_users_logged_in", "Number of active user sessions",
-            new GaugeConfiguration
+            Task.Run(async () =>
             {
-            SuppressInitialValue = true
-            });
-
-            // throw new NotImplementedException();
-            var pusher = new MetricPusher(new MetricPusherOptions
-            {
-                Endpoint = "https://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics",
-                Job = "some_job1",
-                Instance = "Instance1",
-                AdditionalLabels = new[] { new Tuple<string, string>("t1", "t2")},
-                Registry = _reg,
-                OnError = ex =>
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    Console.WriteLine(ex.Message);
+                    _wrapper.SendGaugeValue(DateTime.UtcNow.Second, "RequestSuccessCount", "dev", "bccsaccount", "evn", "ss", "ww" + DateTime.UtcNow.Second % 3);
+                    _wrapper.SendHistogramValue(DateTime.UtcNow.Second, "RequestLatency", "dev", "bccsaccount", "evn", "ss", "ww" + DateTime.UtcNow.Second % 3);
+                    await Task.Delay(1000 * 3);
                 }
+                
+
             });
 
-            pusher.Start();
-
-
-            UsersLoggedIn.Set(1);
-            UsersLoggedIn.Publish();
             return Task.Delay(0);
         }
 

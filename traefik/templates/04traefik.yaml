@@ -32,6 +32,7 @@ spec:
             - --api.insecure
             - --entrypoints.web.address=:80
             - --entrypoints.pro-gateway.address=:8000
+            - --entrypoints.pro-gateway-secure.address=:8001
             - --providers.kubernetescrd
           ports:
             - name: web
@@ -64,3 +65,7 @@ spec:
       port: 8000
       name: pro-gateway
       targetPort: 8000
+    - protocol: TCP
+      port: 8001
+      name: pro-gateway-secure
+      targetPort: 8001

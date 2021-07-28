@@ -1,6 +1,26 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
+  name: ingressroute.pushgatewaysecure
+  namespace: monitoring
+
+spec:
+  entryPoints:
+    - pro-gateway-secure
+  routes:
+  - match: PathPrefix(`/`)
+    kind: Rule
+    services:
+      - name: prometheus-pushgateway
+        port: 9091
+  tls:
+    store: 
+      name: default
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
   name: ingressroute.pushgateway
   namespace: monitoring
 
@@ -13,6 +33,3 @@ spec:
     services:
       - name: prometheus-pushgateway
         port: 9091
-  tls:
-    store: 
-      name: default
