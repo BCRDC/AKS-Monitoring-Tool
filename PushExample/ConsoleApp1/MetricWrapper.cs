@@ -12,7 +12,7 @@ namespace ConsoleApp1
 {
     internal class MetricWrapper: IDisposable
     {
-        private const string Url = "https://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics";
+        private const string Url = "http://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics";
 
         private CollectorRegistry _reg = new CollectorRegistry();
 

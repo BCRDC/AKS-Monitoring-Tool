@@ -30,4 +30,9 @@ curl  http://prom-gateway.chinaeast2.cloudapp.chinacloudapi.cn:8000/metrics/job/
   # htpasswd installation
   https://www.interserver.net/tips/kb/apache-htpasswd-authentication-ubuntu/
 
+
+   # to uninstall 
+   helm install prometheus . --namespace monitoring --set rbac.create=true
+   helm uninstall prometheus  --dry-run --namespace monitoring
+
   

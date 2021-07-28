@@ -33,3 +33,20 @@ spec:
     services:
       - name: prometheus-pushgateway
         port: 9091
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroute.prometheusserver
+  namespace: monitoring
+
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: PathPrefix(`/`)
+    kind: Rule
+    services:
+      - name: prometheus-server
+        port: 80
