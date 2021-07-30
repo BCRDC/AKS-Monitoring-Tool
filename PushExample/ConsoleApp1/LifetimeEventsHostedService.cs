@@ -47,8 +47,8 @@ namespace ConsoleApp1
             {
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    _wrapper.SendGaugeValue(DateTime.UtcNow.Second, "RequestSuccessCount", "dev", "bccsaccount", "evn", "ss", "ww" + DateTime.UtcNow.Second % 3);
-                    _wrapper.SendHistogramValue(DateTime.UtcNow.Second, "RequestLatency", "dev", "bccsaccount", "evn", "ss", "ww" + DateTime.UtcNow.Second % 3);
+                    _wrapper.SendGaugeValue((DateTime.UtcNow.Second % 5) + 1, "BCCS_RequestSuccessCount", "dev", "bccsaccount", "evn", "ss", "ww" + DateTime.UtcNow.Second % 3);
+                    _wrapper.SendHistogramValue((DateTime.UtcNow.Second % 9), "BCCS_RequestLatency", "dev", "bccsaccount", "evn", "ss", "ww" + DateTime.UtcNow.Second % 3);
                     await Task.Delay(1000 * 3);
                 }
                 

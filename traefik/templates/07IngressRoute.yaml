@@ -35,6 +35,7 @@ spec:
         port: 9091
 
 ---
+# should be deleted later
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:

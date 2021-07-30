@@ -1,10 +1,12 @@
-﻿using Prometheus;
+﻿using ConsoleApp1.Http;
+using Prometheus;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +27,10 @@ namespace ConsoleApp1
 
         private ConcurrentDictionary<string, Histogram> _histogramDic = new ConcurrentDictionary<string, Histogram>();
 
+        private ConcurrentDictionary<string, Counter> _counterDic = new ConcurrentDictionary<string, Counter>();
+
+        private ConcurrentDictionary<string, Summary> _summaryDic = new ConcurrentDictionary<string, Summary>();
+
         private string[] _labels = null;
 
         static MetricWrapper()
@@ -34,6 +40,7 @@ namespace ConsoleApp1
 
         public MetricWrapper(string category, string item, params string[] labelNames)
         {
+
             _metricFactory = Metrics.WithCustomRegistry(_reg);
 
             _metricServer = new MetricPusher(new MetricPusherOptions
@@ -47,7 +54,7 @@ namespace ConsoleApp1
                 {
                     Debug.WriteLine(ex.Message);
                 },
-               // HttpClientProvider = () => httpClient
+                HttpClientProvider = () => LocalHttpClient.Instance
             });
 
             _labels = labelNames;
@@ -109,11 +116,79 @@ namespace ConsoleApp1
                 return _metricFactory.CreateHistogram(name, name, new HistogramConfiguration
                 {
                     LabelNames = _labels,
-                    Buckets = Histogram.LinearBuckets(start: 10, width: 10, count: 10)
+                    Buckets = Histogram.LinearBuckets(start: 1, width: 1, count: 40)
                 });
             });
 
             gauge.WithLabels(labelNames).Observe(value);
+
+            return true;
+        }
+
+
+        public bool SendCounterValue(double value, string name, params string[] labelNames)
+        {
+            if (labelNames == null || _labels == null)
+            {
+                return false;
+            }
+
+            if (labelNames != null && _labels != null && labelNames.Count() != _labels.Count())
+            {
+                return false;
+            }
+
+            var key = name + "__" + string.Join("__", labelNames);
+
+            // var dic = labelNames.to
+
+            var gauge = _counterDic.GetOrAdd(key, _key =>
+            {
+
+                return _metricFactory.CreateCounter(name, name, new CounterConfiguration
+                {
+                    LabelNames = _labels,
+                });
+            });
+
+            gauge.WithLabels(labelNames).Inc(value);
+
+            return true;
+        }
+
+        public bool SendSummaryValue(double value, string name, params string[] labelNames)
+        {
+            if (labelNames == null || _labels == null)
+            {
+                return false;
+            }
+
+            if (labelNames != null && _labels != null && labelNames.Count() != _labels.Count())
+            {
+                return false;
+            }
+
+            var key = name + "__" + string.Join("__", labelNames);
+
+            // var dic = labelNames.to
+
+            var summary = _summaryDic.GetOrAdd(key, _key =>
+            {
+
+                return _metricFactory.CreateSummary(name, name, new SummaryConfiguration
+                {
+                    LabelNames = _labels,
+                    //Objectives = new[]
+                    //    {
+                    //        new QuantileEpsilonPair(0.5, 0.05),
+                    //        new QuantileEpsilonPair(0.9, 0.05),
+                    //        new QuantileEpsilonPair(0.95, 0.01),
+                    //        new QuantileEpsilonPair(0.99, 0.005),
+                    //    }
+                });
+            });
+
+            summary.WithLabels(labelNames).Observe(value);
 
             return true;
         }

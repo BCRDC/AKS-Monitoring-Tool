@@ -186,6 +186,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Http\LocalHandler.cs" />
+    <Compile Include="Http\LocalHttpClient.cs" />
     <Compile Include="LifetimeEventsHostedService.cs" />
     <Compile Include="MetricWrapper.cs" />
     <Compile Include="Program.cs" />
