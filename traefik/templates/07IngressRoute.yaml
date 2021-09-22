@@ -6,7 +6,7 @@ metadata:
 
 spec:
   entryPoints:
-    - pro-gateway-secure
+    - pro-gw-secure
   routes:
   - match: PathPrefix(`/`)
     kind: Rule
@@ -26,7 +26,7 @@ metadata:
 
 spec:
   entryPoints:
-    - pro-gateway
+    - pro-gw
   routes:
   - match: PathPrefix(`/`)
     kind: Rule
@@ -44,7 +44,7 @@ metadata:
 
 spec:
   entryPoints:
-    - web
+    - pro-web
   routes:
   - match: PathPrefix(`/`)
     kind: Rule

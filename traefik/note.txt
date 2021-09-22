@@ -8,3 +8,10 @@ kubectl apply -f ./templates/03rbac.yaml
 kubectl apply -f ./templates/04traefik.yaml
 kubectl apply -f ./templates/05TLSstore.yaml
 kubectl apply -f ./templates/07IngressRoute.yaml
+
+# to delete resoruces by yaml
+kubectl delete -f  ./templates/03rbac.yaml
+kubectl delete -f ./templates/02open-api-rbac.yaml 
+
+kubectl delete -f ./templates/04traefik.yaml
+kubectl delete -f ./templates/07IngressRoute.yaml
